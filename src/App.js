@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import React from "react";
 import {PageHeader} from '@workday/canvas-kit-react/page-header';
 import {IconButton} from '@workday/canvas-kit-react/button';
 import {questionFillIcon} from '@workday/canvas-system-icons-web';
@@ -20,7 +21,25 @@ function App() {
             <PageHeader title={'Vote'} capWidth={true}>
                 <IconButton icon={questionFillIcon} />
             </PageHeader>
-            <Layout>
+            <Layout spacing={5}>
+                <Layout.Column>
+                    <Card>
+                        <a href={"http://facebook.github.io/react/"}>
+                            <QRCode value="http://facebook.github.io/react/" />
+                            http://facebook.github.io/react/
+                        </a>
+                    </Card>
+                </Layout.Column>
+
+                <Layout.Column>
+                    <Card>
+                        <a href={"http://facebook.github.io/react/"}>
+                            <QRCode value="http://facebook.github.io/react/" />
+                            http://facebook.github.io/react/
+                        </a>
+                    </Card>
+                </Layout.Column>
+
                 <Layout.Column>
                     <Card>
                         <a href={"http://facebook.github.io/react/"}>
