@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# OP Team Frontend | Aug 2021 XWT Hackathon
+
+## Getting Started
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
