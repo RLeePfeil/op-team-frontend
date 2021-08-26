@@ -1,16 +1,14 @@
-import logo from './logo.svg';
 import React from "react";
 import {PageHeader} from '@workday/canvas-kit-react/page-header';
 import {IconButton} from '@workday/canvas-kit-react/button';
 import {questionFillIcon} from '@workday/canvas-system-icons-web';
-import {Layout} from '@workday/canvas-kit-react/layout'
 import './App.css';
 import QRCode from "qrcode.react";
 import {Card} from '@workday/canvas-kit-react/card';
 import {FormField} from '@workday/canvas-kit-react/form-field';
-import {Radio, RadioGroup} from '@workday/canvas-kit-react/radio';
 import {PrimaryButton, SecondaryButton} from '@workday/canvas-kit-react/button';
 import {TextArea} from '@workday/canvas-kit-react/text-area';
+import ReactPolling from "react-polling";
 
 function App() {
 
@@ -31,7 +29,7 @@ function App() {
     ]
 
     const [question, setQuestion] = React.useState('');
-    const [questionType, setQuestionType] = React.useState('');
+    const [questionType, setQuestionType] = React.useState([]);
 
     const handleChange = (event) => {
         setQuestion(event.target.value);
@@ -41,6 +39,14 @@ function App() {
     const handleType = (value) => {
         setQuestionType(value);
         console.log(value);
+    }
+
+    const pollSuccess = (resp) => {
+        console.log(resp);
+    }
+    const pollFailure = () => {
+        // shhhh
+        console.log('poll failure');
     }
 
     const handleSubmit = (event) => {
@@ -64,7 +70,7 @@ function App() {
                             <TextArea onChange={handleChange} value={question} />
                         </FormField>
                         <div className={'questionTypes'}>
-                            <SecondaryButton>Fun</SecondaryButton>
+                            <SecondaryButton className={questionType.indexOf("fun") ? 'active' : ''}>Fun</SecondaryButton>
                             <SecondaryButton>Integrity</SecondaryButton>
                             <SecondaryButton>Profitability</SecondaryButton>
                             <SecondaryButton>Employees</SecondaryButton>
@@ -106,6 +112,28 @@ function App() {
                     </Card>
                 </div>
             </section>
+
+            <ReactPolling
+                url={'url to poll'}
+                interval= {3000} // in milliseconds(ms)
+                //retryCount={3} // this is optional
+                onSuccess={pollSuccess}
+                onFailure={pollFailure} // this is optional
+                method={'GET'}
+                // headers={headers object} // this is optional
+                // body={JSON.stringify(data)} // data to send in a post call. Should be stringified always
+                render={({ startPolling, stopPolling, isPolling }) => {
+                    if(isPolling) {
+                        return (
+                            <div>Polling</div>
+                        );
+                    } else {
+                        return (
+                            <div>Not polling</div>
+                        );
+                    }
+                }}
+            />
         </>
   );
 }
