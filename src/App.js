@@ -13,7 +13,17 @@ function App() {
     const QRCode = require('qrcode.react');
 
     const QRCodes = [
-
+        `{
+            "type": "https://didcomm.org/didexchange/1.0/invitation",
+            // some uuid for the interaction
+            "id": "31ffa98d-db02-4e14-8b3f-8ecd9e094598",
+            "label": "Question App",
+            // this is the websites pubkey
+            // maybe a unique key for the interaction
+            "recipientKeys":["pJh/gE6rYRhxZnGrDQEZmAbB11GF+gLSwZuYuYkb8R4="], 
+            // some callback url like this-ish
+            "serviceEndpoint": "localhost:3000/question/:questionID" 
+        } `
     ]
 
     return (
@@ -24,27 +34,27 @@ function App() {
             <Layout spacing={5}>
                 <Layout.Column>
                     <Card>
-                        <a href={"http://facebook.github.io/react/"}>
-                            <QRCode value="http://facebook.github.io/react/" />
-                            http://facebook.github.io/react/
+                        <a href={QRCodes[0]}>
+                            <QRCode value={QRCodes[0]} />
+                            {QRCodes[0]}
                         </a>
                     </Card>
                 </Layout.Column>
 
                 <Layout.Column>
                     <Card>
-                        <a href={"http://facebook.github.io/react/"}>
-                            <QRCode value="http://facebook.github.io/react/" />
-                            http://facebook.github.io/react/
+                        <a href={QRCodes[0]}>
+                            <QRCode value={QRCodes[0]} />
+                            {QRCodes[0]}
                         </a>
                     </Card>
                 </Layout.Column>
 
                 <Layout.Column>
                     <Card>
-                        <a href={"http://facebook.github.io/react/"}>
-                            <QRCode value="http://facebook.github.io/react/" />
-                            http://facebook.github.io/react/
+                        <a href={QRCodes[0]}>
+                            <QRCode value={QRCodes[0]} />
+                            {QRCodes[0]}
                         </a>
                     </Card>
                 </Layout.Column>
