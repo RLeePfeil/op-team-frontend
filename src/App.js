@@ -9,7 +9,7 @@ import QRCode from "qrcode.react";
 import {Card} from '@workday/canvas-kit-react/card';
 import {FormField} from '@workday/canvas-kit-react/form-field';
 import {Radio, RadioGroup} from '@workday/canvas-kit-react/radio';
-import {PrimaryButton} from '@workday/canvas-kit-react/button';
+import {PrimaryButton, SecondaryButton} from '@workday/canvas-kit-react/button';
 import {TextArea} from '@workday/canvas-kit-react/text-area';
 
 function App() {
@@ -56,25 +56,35 @@ function App() {
 
             <section className={'topContainer'} >
                 <div className={'top'} >
-                    <h3 style={{textAlign: 'center'}}>Never be afraid of asking a "stupid question" again!<br/>
+                    <h3>Never be afraid of asking a "stupid question" again!<br/>
                         Ask and vote anonymously.</h3>
 
-                    <FormField label="Ask a Question">
-                        <TextArea onChange={handleChange} value={question} />
-
-                        <FormField label="type" required={true} useFieldset={true}>
-                            <RadioGroup name="crust" onChange={handleType} value={questionType}>
-                                <Radio label="Fun" value="Fun" />
-                                <Radio label="Integrity" value="Integrity" />
-                                <Radio label="Profitability" value="Profitability" />
-                                <Radio label="Employees" value="Employees" />
-                                <Radio label="Innovation" value="Innovation" />
-                                <Radio label="Customer Service" value="Customer-Service" />
-                            </RadioGroup>
+                    <div className={'questionBox'}>
+                        <FormField label="Your Question">
+                            <TextArea onChange={handleChange} value={question} />
                         </FormField>
+                        <div className={'questionTypes'}>
+                            <SecondaryButton>Fun</SecondaryButton>
+                            <SecondaryButton>Integrity</SecondaryButton>
+                            <SecondaryButton>Profitability</SecondaryButton>
+                            <SecondaryButton>Employees</SecondaryButton>
+                            <SecondaryButton>Innovation</SecondaryButton>
+                            <SecondaryButton>Customer Service</SecondaryButton>
+                        </div>
+                    </div>
 
-                        <PrimaryButton onClick={handleSubmit}>Ask Away!</PrimaryButton>
-                    </FormField>
+                    {/*<FormField label="type" required={true} useFieldset={true}>
+                        <RadioGroup name="crust" onChange={handleType} value={questionType}>
+                            <Radio label="Fun" value="Fun" />
+                            <Radio label="Integrity" value="Integrity" />
+                            <Radio label="Profitability" value="Profitability" />
+                            <Radio label="Employees" value="Employees" />
+                            <Radio label="Innovation" value="Innovation" />
+                            <Radio label="Customer Service" value="Customer-Service" />
+                        </RadioGroup>
+                    </FormField>*/}
+
+                    <PrimaryButton onClick={handleSubmit}>Ask Away!</PrimaryButton>
                 </div>
             </section>
 
