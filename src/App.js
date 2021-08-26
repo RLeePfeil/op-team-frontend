@@ -12,8 +12,6 @@ import ReactPolling from "react-polling";
 
 function App() {
 
-    const QRCode = require('qrcode.react');
-
     const QRCodes = [
         `{
             "type": "https://didcomm.org/didexchange/1.0/invitation",
@@ -36,11 +34,6 @@ function App() {
         console.log(event.target.value);
     };
 
-    const handleType = (value) => {
-        setQuestionType(value);
-        console.log(value);
-    }
-
     const pollSuccess = (resp) => {
         console.log(resp);
     }
@@ -52,6 +45,39 @@ function App() {
     const handleSubmit = (event) => {
         // TODO Give the server the question
         alert(question + "\nQuestion category:" + questionType);
+    }
+
+    const Types = [
+        {name: 'Fun', value: 'fun'},
+        {name: 'Integrity', value: 'integrity'},
+        {name: 'Profitability', value: 'profitability'},
+        {name: 'Employees', value: 'employees'},
+        {name: 'Innovation', value: 'innovation'},
+        {name: 'Customer Service', value: 'customerservice'}
+    ]
+    const TypeButton = (name, value) => {
+        return (
+            <SecondaryButton
+                key={value}
+                id={`type-${value}`}
+                className={isTypeActive(value)}
+                onClick={() => setTypeActive(value)}
+            >
+                {name}
+            </SecondaryButton>
+        )
+    }
+    const isTypeActive = (type) => questionType.indexOf(type) !== -1 ? 'active' : '';
+    const setTypeActive = (type) => {
+        console.log('setting active type');
+        if (isTypeActive(type) === 'active') {
+            // Remove type from list
+            setQuestionType(questionType.filter((value) => value !== type))
+        } else {
+            // Add type to list
+            console.log('add type to list');
+            setQuestionType([...questionType, type])
+        }
     }
 
     return (
@@ -70,27 +96,14 @@ function App() {
                             <TextArea onChange={handleChange} value={question} />
                         </FormField>
                         <div className={'questionTypes'}>
-                            <SecondaryButton className={questionType.indexOf("fun") ? 'active' : ''}>Fun</SecondaryButton>
-                            <SecondaryButton>Integrity</SecondaryButton>
-                            <SecondaryButton>Profitability</SecondaryButton>
-                            <SecondaryButton>Employees</SecondaryButton>
-                            <SecondaryButton>Innovation</SecondaryButton>
-                            <SecondaryButton>Customer Service</SecondaryButton>
+                            { Types.map((type) => TypeButton(type.name, type.value)) }
+                            { /*questionType.toString()*/ }
                         </div>
                     </div>
 
-                    {/*<FormField label="type" required={true} useFieldset={true}>
-                        <RadioGroup name="crust" onChange={handleType} value={questionType}>
-                            <Radio label="Fun" value="Fun" />
-                            <Radio label="Integrity" value="Integrity" />
-                            <Radio label="Profitability" value="Profitability" />
-                            <Radio label="Employees" value="Employees" />
-                            <Radio label="Innovation" value="Innovation" />
-                            <Radio label="Customer Service" value="Customer-Service" />
-                        </RadioGroup>
-                    </FormField>*/}
-
-                    <PrimaryButton onClick={handleSubmit}>Ask Away!</PrimaryButton>
+                    <PrimaryButton
+                        size={'large'}
+                        onClick={handleSubmit}>Ask Away!</PrimaryButton>
                 </div>
             </section>
 

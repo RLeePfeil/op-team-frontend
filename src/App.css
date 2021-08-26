@@ -34,9 +34,22 @@
   width: 100%;
 }
 
+.css-1jcj00e.active, .css-1jcj00e:active {
+  color: #000!important;
+  background-color: #FFF!important;
+  opacity: .8;
+}
+#type-fun.active { background-color: aquamarine!important; }
+#type-integrity.active { background-color: cornflowerblue!important; }
+#type-profitability.active { background-color: chartreuse!important; }
+#type-employees.active { background-color: coral!important; }
+#type-innovation.active { background-color: hotpink!important; }
+#type-customerservice.active { background-color: darkkhaki!important; }
+
 .questionTypes {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
   margin: -20px auto 24px;
 }
 
