@@ -7,6 +7,9 @@ import {Layout} from '@workday/canvas-kit-react/layout'
 import './App.css';
 import QRCode from "qrcode.react";
 import {Card} from '@workday/canvas-kit-react/card';
+import {FormField} from '@workday/canvas-kit-react/form-field';
+import {PrimaryButton} from '@workday/canvas-kit-react/button';
+import {TextArea} from '@workday/canvas-kit-react/text-area';
 
 function App() {
 
@@ -26,39 +29,73 @@ function App() {
         } `
     ]
 
+    const [value, setValue] = React.useState('');
+
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setValue(event.target.value);
+        console.log(value);
+    };
+
+    const styles = {
+        topContainer: {
+            padding: '36px 0',
+            backgroundColor: '#EFEFEF'
+        },
+        top: {
+            maxWidth: '1360px',
+            margin: '0 auto',
+        },
+        middleContainer: {
+            padding: '36px 0'
+        },
+        middle: {
+            maxWidth: '1360px',
+            margin:'0 auto'
+        }
+    }
+
     return (
         <>
-            <PageHeader title={'Vote'} capWidth={true}>
+            <PageHeader title={'Ask Me Anything Anonymously'} capWidth={true}>
                 <IconButton icon={questionFillIcon} />
             </PageHeader>
-            <Layout spacing={5}>
-                <Layout.Column>
-                    <Card>
-                        <a href={QRCodes[0]}>
-                            <QRCode value={QRCodes[0]} />
-                            {QRCodes[0]}
-                        </a>
-                    </Card>
-                </Layout.Column>
 
-                <Layout.Column>
-                    <Card>
-                        <a href={QRCodes[0]}>
-                            <QRCode value={QRCodes[0]} />
-                            {QRCodes[0]}
-                        </a>
-                    </Card>
-                </Layout.Column>
+            <section style={styles.topContainer}>
+                <div style={styles.top}>
+                    <h3 style={{textAlign: 'center'}}>Never be afraid of asking a "stupid question" again!<br/>
+                        Ask and vote anonymously.</h3>
 
-                <Layout.Column>
+                    <FormField label="Ask a Question">
+                        <TextArea onChange={handleChange} value={value} />
+                        <PrimaryButton>Ask Away!</PrimaryButton>
+                    </FormField>
+                </div>
+            </section>
+
+            <section style={styles.middleContainer}>
+                <div style={styles.middle}>
+                    <Layout>
+                        <Layout.Column columns={12}>
+
+                        </Layout.Column>
+                    </Layout>
+
                     <Card>
-                        <a href={QRCodes[0]}>
-                            <QRCode value={QRCodes[0]} />
-                            {QRCodes[0]}
-                        </a>
+                        <QRCode value={QRCodes[0]} />
+                        <p>{QRCodes[0]}</p>
                     </Card>
-                </Layout.Column>
-            </Layout>
+
+                    <Card>
+                        <QRCode value={QRCodes[0]} />
+                        <p>{QRCodes[0]}</p>
+                    </Card>
+
+                    <Card>
+                        <QRCode value={QRCodes[0]} />
+                        <p>{QRCodes[0]}</p>
+                    </Card>
+                </div>
+            </section>
         </>
   );
 }
