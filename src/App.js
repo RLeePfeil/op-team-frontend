@@ -48,35 +48,14 @@ function App() {
         alert(question + "\nQuestion category:" + questionType);
     }
 
-    const styles = {
-        topContainer: {
-            padding: '36px 0',
-            backgroundColor: '#EFEFEF'
-        },
-        top: {
-            maxWidth: '1360px',
-            margin: '0 auto',
-        },
-        middleContainer: {
-            padding: '36px 0'
-        },
-        middle: {
-            maxWidth: '1360px',
-            margin:'0 auto',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '12px'
-        }
-    }
-
     return (
         <>
             <PageHeader title={'Ask Me Anything Anonymously'} capWidth={true}>
                 <IconButton icon={questionFillIcon} />
             </PageHeader>
 
-            <section style={styles.topContainer}>
-                <div style={styles.top}>
+            <section className={'topContainer'} >
+                <div className={'top'} >
                     <h3 style={{textAlign: 'center'}}>Never be afraid of asking a "stupid question" again!<br/>
                         Ask and vote anonymously.</h3>
 
@@ -99,8 +78,8 @@ function App() {
                 </div>
             </section>
 
-            <section style={styles.middleContainer}>
-                <div style={styles.middle}>
+            <section className={'middleContainer'} >
+                <div className={'middle'} >
                     <Card>
                         <QRCode value={QRCodes[0]} />
                         <p>{QRCodes[0]}</p>
