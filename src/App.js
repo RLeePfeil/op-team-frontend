@@ -8,6 +8,7 @@ import './App.css';
 import QRCode from "qrcode.react";
 import {Card} from '@workday/canvas-kit-react/card';
 import {FormField} from '@workday/canvas-kit-react/form-field';
+import {Radio, RadioGroup} from '@workday/canvas-kit-react/radio';
 import {PrimaryButton} from '@workday/canvas-kit-react/button';
 import {TextArea} from '@workday/canvas-kit-react/text-area';
 
@@ -29,12 +30,23 @@ function App() {
         } `
     ]
 
-    const [value, setValue] = React.useState('');
+    const [question, setQuestion] = React.useState('');
+    const [questionType, setQuestionType] = React.useState('');
 
-    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(event.target.value);
-        console.log(value);
+    const handleChange = (event) => {
+        setQuestion(event.target.value);
+        console.log(event.target.value);
     };
+
+    const handleType = (value) => {
+        setQuestionType(value);
+        console.log(value);
+    }
+
+    const handleSubmit = (event) => {
+        // TODO Give the server the question
+        alert(question + "\nQuestion category:" + questionType);
+    }
 
     const styles = {
         topContainer: {
@@ -50,7 +62,10 @@ function App() {
         },
         middle: {
             maxWidth: '1360px',
-            margin:'0 auto'
+            margin:'0 auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px'
         }
     }
 
@@ -66,20 +81,26 @@ function App() {
                         Ask and vote anonymously.</h3>
 
                     <FormField label="Ask a Question">
-                        <TextArea onChange={handleChange} value={value} />
-                        <PrimaryButton>Ask Away!</PrimaryButton>
+                        <TextArea onChange={handleChange} value={question} />
+
+                        <FormField label="type" required={true} useFieldset={true}>
+                            <RadioGroup name="crust" onChange={handleType} value={questionType}>
+                                <Radio label="Fun" value="Fun" />
+                                <Radio label="Integrity" value="Integrity" />
+                                <Radio label="Profitability" value="Profitability" />
+                                <Radio label="Employees" value="Employees" />
+                                <Radio label="Innovation" value="Innovation" />
+                                <Radio label="Customer Service" value="Customer-Service" />
+                            </RadioGroup>
+                        </FormField>
+
+                        <PrimaryButton onClick={handleSubmit}>Ask Away!</PrimaryButton>
                     </FormField>
                 </div>
             </section>
 
             <section style={styles.middleContainer}>
                 <div style={styles.middle}>
-                    <Layout>
-                        <Layout.Column columns={12}>
-
-                        </Layout.Column>
-                    </Layout>
-
                     <Card>
                         <QRCode value={QRCodes[0]} />
                         <p>{QRCodes[0]}</p>
