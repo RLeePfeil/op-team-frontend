@@ -44,7 +44,7 @@ function App() {
 
     const handleSubmit = (event) => {
         // TODO Give the server the question
-        alert(question + "\nQuestion category:" + questionType);
+        alert("Question text:\n" + question + "\n\nQuestion category:\n" + questionType);
     }
 
     const Types = [
