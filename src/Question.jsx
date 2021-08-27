@@ -4,8 +4,6 @@ import {SecondaryButton} from "@workday/canvas-kit-react/button";
 import QRCode from "qrcode.react";
 
 export default function Question(q, qr, initializeQr) {
-    console.log(qr);
-
     const handleUpvote = () => {
         initializeQr(q.id);
         // TODO Show loading state
