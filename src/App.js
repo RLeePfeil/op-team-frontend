@@ -29,7 +29,36 @@ function App() {
     ]
 
     const [question, setQuestion] = React.useState('');
-    const [questions, setQuestions] = React.useState([1, 2, 3]);
+    const [questions, setQuestions] = React.useState([{
+            id: '1234',
+            question: 'Question text',
+            dids: [
+                'did:peer:234',
+                'did:peer:234',
+                'did:peer:234',
+                'did:peer:234'
+            ]
+        },
+        {
+            id: '1234',
+            question: 'Question text',
+            dids: [
+                'did:peer:234',
+                'did:peer:234',
+                'did:peer:234',
+                'did:peer:234'
+            ]
+        },
+        {
+            id: '1234',
+            question: 'Question text',
+            dids: [
+                'did:peer:234',
+                'did:peer:234',
+                'did:peer:234',
+                'did:peer:234'
+            ]
+        }]);
     const [questionType, setQuestionType] = React.useState([]);
 
     const handleChange = (event) => {
@@ -94,8 +123,9 @@ function App() {
     const Question = (q) => {
         return (
             <Card>
-                <QRCode value={QRCodes[0]} />
-                <p>{QRCodes[0]}</p>
+                <h4>{q.question}</h4>
+                <QRCode value={q.id} />
+                <p>{q.id}</p>
             </Card>
         )
     }
