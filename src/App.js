@@ -32,6 +32,10 @@ function App() {
         console.log('poll failure');
     }
 
+    const handleClearQRs = () => {
+        setQrs([])
+    }
+
     const handleQuestionSubmit = async () => {
         if (question == "") {
             return
@@ -164,7 +168,7 @@ function App() {
 
             <section className={'middleContainer'} >
                 <div className={'middle'} >
-                    { questions.length > 0 && questions.map(q => Question(q, myQR(q.id), handleUpvote)) }
+                    { questions.length > 0 && questions.map(q => Question(q, myQR(q.id), handleUpvote, handleClearQRs)) }
                 </div>
             </section>
 
