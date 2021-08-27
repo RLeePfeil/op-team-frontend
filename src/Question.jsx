@@ -4,7 +4,7 @@ import {SecondaryButton} from "@workday/canvas-kit-react/button";
 import QRCode from "qrcode.react";
 
 export default function Question(q) {
-    const [qr, setQr] = React.useState();
+    const [qr, setQr] = React.useState(null);
     console.log(qr);
 
     const handleUpvote = () => {
@@ -40,14 +40,10 @@ export default function Question(q) {
         setQr(data);
     }
 
-    const numUpvotes = () => {
-        return q.dids.length;
-    }
-
     return (
         <Card key={q.id}>
-            <h4>{q.Text}</h4>
-            <SecondaryButton className='upvote' onClick={handleUpvote}>{numUpvotes} &#128588;</SecondaryButton>
+            <h4>{q.text}</h4>
+            <SecondaryButton className='upvote' onClick={handleUpvote}>{q.dids.length} &#128588;</SecondaryButton>
 
             { qr === null ? null : (
                 <div>
