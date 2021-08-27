@@ -16,7 +16,7 @@ function App() {
     const [question, setQuestion] = React.useState('');
     const [questionType, setQuestionType] = React.useState([]);
     const [questions, setQuestions] = React.useState([]);
-    const [qrs, setQrs] = React.useState([]);
+    const [qrs, setQrs] = React.useState([{id: 983642, qr:'qrstring'}]);
 
     const handleChange = (event) => {
         setQuestion(event.target.value);
@@ -82,10 +82,9 @@ function App() {
 
         // Initiate request to server
         getQuestionQR(id).then(data => {
-            console.log(data)
-            handleUpvoteSuccess(data);
+            handleUpvoteSuccess(id, data);
         }).catch((error) => {
-            alert(error);
+            //alert(error);
             console.error('Error:', error);
         });
     }
@@ -109,8 +108,11 @@ function App() {
         return response.json(); // parses JSON response into native JavaScript objects
     }
 
-    const handleUpvoteSuccess = (data) => {
-        setQrs([...qrs, data]);
+    const handleUpvoteSuccess = (id, qr) => {
+        setQrs([
+            ...qrs,
+            {id, qr}
+        ]);
     }
 
     return (
