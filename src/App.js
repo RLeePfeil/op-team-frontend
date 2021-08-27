@@ -15,21 +15,7 @@ function App() {
 
     const [question, setQuestion] = React.useState('');
     const [questionType, setQuestionType] = React.useState([]);
-    const [questions, setQuestions] = React.useState([
-        {
-            id: '1234',
-            text: 'Question Text',
-            dids: [
-                '123',
-                '234'
-            ],
-            tags: [
-                1,
-                2,
-                3
-            ]
-        }
-    ]);
+    const [questions, setQuestions] = React.useState([]);
     const [qrs, setQrs] = React.useState([]);
 
     const handleChange = (event) => {
@@ -91,10 +77,8 @@ function App() {
     }
 
     const handleUpvote = (id) => {
-        console.log('qr code for '+id);
-        handleUpvoteSuccess({id: id, qr: 'abcdefg'});
-        console.log(qrs);
-        return;
+        // Data expects to be in format:
+        // {id: id, qr: 'abcdefg'}
 
         // Initiate request to server
         getQuestionQR(id).then(data => {
@@ -128,57 +112,8 @@ function App() {
         setQrs([...qrs, data]);
     }
 
-    const testSet = () => {
-        setQrs([
-            {id: '1234', qr:'abcdefg'}
-        ])
-
-        setQuestions([
-            {
-                id: '1234',
-                text: 'Question Text',
-                dids: [
-                    '123',
-                    '234'
-                ],
-                tags: [
-                    1,
-                    2,
-                    3
-                ]
-            },
-            {
-                id: '12345',
-                text: 'Question Text',
-                dids: [
-                    '123',
-                    '234'
-                ],
-                tags: [
-                    1,
-                    2,
-                    3
-                ]
-            },
-            {
-                id: '123456',
-                text: 'Question Text',
-                dids: [
-                    '123',
-                    '234'
-                ],
-                tags: [
-                    1,
-                    2,
-                    3
-                ]
-            }
-        ])
-    }
-
     return (
         <>
-            <button onClick={testSet}>TEST</button>
             <PageHeader title={'Ask Me Anything Anonymously'} capWidth={true}>
                 <IconButton aria-label='help' icon={questionFillIcon} onClick={showHelp} />
             </PageHeader>
@@ -210,7 +145,7 @@ function App() {
                 </div>
             </section>
 
-            {/*<ReactPolling
+            <ReactPolling
                 url={`${server}/getQuestionsMetadata`}
                 interval= {3000} // in milliseconds(ms)
                 retryCount={9999} // this is optional
@@ -229,7 +164,7 @@ function App() {
                         );
                     }
                 }}
-            />*/}
+            />
         </>
   );
 }
