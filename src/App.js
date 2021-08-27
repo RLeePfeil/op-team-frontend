@@ -3,12 +3,11 @@ import {PageHeader} from '@workday/canvas-kit-react/page-header';
 import {IconButton} from '@workday/canvas-kit-react/button';
 import {questionFillIcon} from '@workday/canvas-system-icons-web';
 import './App.css';
-import QRCode from "qrcode.react";
-import {Card} from '@workday/canvas-kit-react/card';
 import {FormField} from '@workday/canvas-kit-react/form-field';
 import {PrimaryButton, SecondaryButton} from '@workday/canvas-kit-react/button';
 import {TextArea} from '@workday/canvas-kit-react/text-area';
 import ReactPolling from "react-polling";
+import Question from "./Question";
 
 function App() {
 
@@ -29,6 +28,7 @@ function App() {
     ]
 
     const [question, setQuestion] = React.useState('');
+    const [questionType, setQuestionType] = React.useState([]);
     const [questions, setQuestions] = React.useState([{
             id: '1234',
             question: 'Question text',
@@ -59,7 +59,6 @@ function App() {
                 'did:peer:234'
             ]
         }]);
-    const [questionType, setQuestionType] = React.useState([]);
 
     const handleChange = (event) => {
         setQuestion(event.target.value);
@@ -76,11 +75,7 @@ function App() {
         console.log('poll failure');
     }
 
-    const handleUpvote = () => {
-        // initiate
-    }
-
-    const handleSubmit = () => {
+    const handleQuestionSubmit = () => {
         // TODO Give the server the question
         alert("Question text:\n" + question + "\n\nQuestion category:\n" + questionType);
     }
@@ -120,16 +115,6 @@ function App() {
         }
     }
 
-    const Question = (q) => {
-        return (
-            <Card>
-                <h4>{q.question}</h4>
-                <QRCode value={q.id} />
-                <p>{q.id}</p>
-            </Card>
-        )
-    }
-
     return (
         <>
             <PageHeader title={'Ask Me Anything Anonymously'} capWidth={true}>
@@ -153,7 +138,7 @@ function App() {
 
                     <PrimaryButton
                         size={'large'}
-                        onClick={handleSubmit}>Ask Away!</PrimaryButton>
+                        onClick={handleQuestionSubmit}>Ask Away!</PrimaryButton>
                 </div>
             </section>
 

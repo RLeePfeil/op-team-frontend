@@ -53,6 +53,10 @@
   margin: -20px auto 24px;
 }
 
+.upvote {
+
+}
+
 @media screen and (max-width: 1430px) {
   .topContainer, .middleContainer {
     padding: 36px 24px;
