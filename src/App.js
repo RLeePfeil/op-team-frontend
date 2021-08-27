@@ -15,21 +15,7 @@ function App() {
 
     const [question, setQuestion] = React.useState('');
     const [questionType, setQuestionType] = React.useState([]);
-    const [questions, setQuestions] = React.useState([
-        {
-            id: '1234',
-            text: 'Question Text',
-            dids: [
-                '123',
-                '234'
-            ],
-            tags: [
-                1,
-                2,
-                3
-            ]
-        }
-    ]);
+    const [questions, setQuestions] = React.useState();
 
     const handleChange = (event) => {
         setQuestion(event.target.value);
@@ -117,7 +103,7 @@ function App() {
                 </div>
             </section>
 
-            {/*<ReactPolling
+            <ReactPolling
                 url={`${server}/getQuestionsMetadata`}
                 interval= {3000} // in milliseconds(ms)
                 retryCount={9999} // this is optional
@@ -136,7 +122,7 @@ function App() {
                         );
                     }
                 }}
-            />*/}
+            />
         </>
   );
 }
