@@ -11,54 +11,11 @@ import Question from "./Question";
 
 function App() {
 
-    const server = 'localhost:8080';
-
-    const QRCodes = [
-        `{
-            "type": "https://didcomm.org/didexchange/1.0/invitation",
-            // some uuid for the interaction
-            "id": "31ffa98d-db02-4e14-8b3f-8ecd9e094598",
-            "label": "Question App",
-            // this is the websites pubkey
-            // maybe a unique key for the interaction
-            "recipientKeys":["pJh/gE6rYRhxZnGrDQEZmAbB11GF+gLSwZuYuYkb8R4="], 
-            // some callback url like this-ish
-            "serviceEndpoint": "localhost:3000/question/:questionID" 
-        } `
-    ]
+    const server = 'http://localhost:8080';
 
     const [question, setQuestion] = React.useState('');
     const [questionType, setQuestionType] = React.useState([]);
-    const [questions, setQuestions] = React.useState([{
-            id: '1234',
-            question: 'Question text',
-            dids: [
-                'did:peer:234',
-                'did:peer:234',
-                'did:peer:234',
-                'did:peer:234'
-            ]
-        },
-        {
-            id: '1234',
-            question: 'Question text',
-            dids: [
-                'did:peer:234',
-                'did:peer:234',
-                'did:peer:234',
-                'did:peer:234'
-            ]
-        },
-        {
-            id: '1234',
-            question: 'Question text',
-            dids: [
-                'did:peer:234',
-                'did:peer:234',
-                'did:peer:234',
-                'did:peer:234'
-            ]
-        }]);
+    const [questions, setQuestions] = React.useState([]);
 
     const handleChange = (event) => {
         setQuestion(event.target.value);
@@ -66,9 +23,7 @@ function App() {
     };
 
     const pollSuccess = (resp) => {
-        console.log(resp);
-
-        // Update all data on the page using setQuestions
+        setQuestions(resp.questions)
     }
     const pollFailure = () => {
         // shhhh
@@ -144,12 +99,12 @@ function App() {
 
             <section className={'middleContainer'} >
                 <div className={'middle'} >
-                    { questions.map((q) => Question(q)) }
+                    { questions.length > 0 && questions.map((q) => Question(q)) }
                 </div>
             </section>
 
             <ReactPolling
-                url={'/'} // TODO url to poll
+                url={`${server}/getQuestionsMetadata`}
                 interval= {3000} // in milliseconds(ms)
                 retryCount={9999} // this is optional
                 onSuccess={pollSuccess}
