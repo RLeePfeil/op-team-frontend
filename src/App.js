@@ -15,7 +15,22 @@ function App() {
 
     const [question, setQuestion] = React.useState('');
     const [questionType, setQuestionType] = React.useState([]);
-    const [questions, setQuestions] = React.useState();
+    const [questions, setQuestions] = React.useState([
+        {
+            id: '1234',
+            text: 'Question Text',
+            dids: [
+                '123',
+                '234'
+            ],
+            tags: [
+                1,
+                2,
+                3
+            ]
+        }
+    ]);
+    const [qrs, setQrs] = React.useState([]);
 
     const handleChange = (event) => {
         setQuestion(event.target.value);
@@ -70,8 +85,100 @@ function App() {
         }
     }
 
+    const myQR = (id) => {
+        const list = qrs.filter(row => row.id === id);
+        return list.length === 0 ? null : list[list.length-1].qr;
+    }
+
+    const handleUpvote = (id) => {
+        console.log('qr code for '+id);
+        handleUpvoteSuccess({id: id, qr: 'abcdefg'});
+        console.log(qrs);
+        return;
+
+        // Initiate request to server
+        getQuestionQR(id).then(data => {
+            handleUpvoteSuccess(data);
+        }).catch((error) => {
+            alert(error);
+            console.error('Error:', error);
+        });
+    }
+
+    async function getQuestionQR(id) {
+        // TODO proper url
+        const url = 'https://localhost:8080/initialize?id=' + id;
+
+        const response = await fetch(url, {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            //credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+    }
+
+    const handleUpvoteSuccess = (data) => {
+        setQrs([...qrs, data]);
+    }
+
+    const testSet = () => {
+        setQrs([
+            {id: '1234', qr:'abcdefg'}
+        ])
+
+        setQuestions([
+            {
+                id: '1234',
+                text: 'Question Text',
+                dids: [
+                    '123',
+                    '234'
+                ],
+                tags: [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                id: '12345',
+                text: 'Question Text',
+                dids: [
+                    '123',
+                    '234'
+                ],
+                tags: [
+                    1,
+                    2,
+                    3
+                ]
+            },
+            {
+                id: '123456',
+                text: 'Question Text',
+                dids: [
+                    '123',
+                    '234'
+                ],
+                tags: [
+                    1,
+                    2,
+                    3
+                ]
+            }
+        ])
+    }
+
     return (
         <>
+            <button onClick={testSet}>TEST</button>
             <PageHeader title={'Ask Me Anything Anonymously'} capWidth={true}>
                 <IconButton aria-label='help' icon={questionFillIcon} onClick={showHelp} />
             </PageHeader>
@@ -99,11 +206,11 @@ function App() {
 
             <section className={'middleContainer'} >
                 <div className={'middle'} >
-                    { questions.length > 0 && questions.map(q => Question(q)) }
+                    { questions.length > 0 && questions.map(q => Question(q, myQR(q.id), handleUpvote)) }
                 </div>
             </section>
 
-            <ReactPolling
+            {/*<ReactPolling
                 url={`${server}/getQuestionsMetadata`}
                 interval= {3000} // in milliseconds(ms)
                 retryCount={9999} // this is optional
@@ -122,7 +229,7 @@ function App() {
                         );
                     }
                 }}
-            />
+            />*/}
         </>
   );
 }
