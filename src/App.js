@@ -42,9 +42,14 @@ function App() {
         console.log('poll failure');
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = () => {
         // TODO Give the server the question
         alert("Question text:\n" + question + "\n\nQuestion category:\n" + questionType);
+    }
+
+    const showHelp = () => {
+        // TODO add modal with instructions on how to vote
+        alert('modal with instructions on how to vote');
     }
 
     const Types = [
@@ -69,13 +74,11 @@ function App() {
     }
     const isTypeActive = (type) => questionType.indexOf(type) !== -1 ? 'active' : '';
     const setTypeActive = (type) => {
-        console.log('setting active type');
         if (isTypeActive(type) === 'active') {
             // Remove type from list
             setQuestionType(questionType.filter((value) => value !== type))
         } else {
             // Add type to list
-            console.log('add type to list');
             setQuestionType([...questionType, type])
         }
     }
@@ -83,7 +86,7 @@ function App() {
     return (
         <>
             <PageHeader title={'Ask Me Anything Anonymously'} capWidth={true}>
-                <IconButton icon={questionFillIcon} />
+                <IconButton aria-label='help' icon={questionFillIcon} onClick={showHelp} />
             </PageHeader>
 
             <section className={'topContainer'} >
@@ -127,22 +130,21 @@ function App() {
             </section>
 
             <ReactPolling
-                url={'url to poll'}
+                url={'/'} // TODO url to poll
                 interval= {3000} // in milliseconds(ms)
-                //retryCount={3} // this is optional
+                retryCount={9999} // this is optional
                 onSuccess={pollSuccess}
-                onFailure={pollFailure} // this is optional
+                onFailure={pollFailure}
                 method={'GET'}
                 // headers={headers object} // this is optional
-                // body={JSON.stringify(data)} // data to send in a post call. Should be stringified always
                 render={({ startPolling, stopPolling, isPolling }) => {
                     if(isPolling) {
                         return (
-                            <div>Polling</div>
+                            <button onClick={stopPolling} title={'Stop Polling'}>Polling</button>
                         );
                     } else {
                         return (
-                            <div>Not polling</div>
+                            <button onClick={startPolling} title={'Start Polling'}>Not polling</button>
                         );
                     }
                 }}
