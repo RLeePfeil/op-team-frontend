@@ -41,7 +41,7 @@ export default function Question(q) {
     }
 
     const numUpvotes = () => {
-        return q.Upvotes.length;
+        return q.dids.length;
     }
 
     return (

@@ -15,7 +15,9 @@ function App() {
 
     const [question, setQuestion] = React.useState('');
     const [questionType, setQuestionType] = React.useState([]);
-    const [questions, setQuestions] = React.useState([]);
+    const [questions, setQuestions] = React.useState([
+
+    ]);
 
     const handleChange = (event) => {
         setQuestion(event.target.value);
