@@ -8,6 +8,7 @@ import {PrimaryButton, SecondaryButton} from '@workday/canvas-kit-react/button';
 import {TextArea} from '@workday/canvas-kit-react/text-area';
 import ReactPolling from "react-polling";
 import Question from "./Question";
+import { v4 } from "uuid"
 
 function App() {
 
@@ -31,9 +32,28 @@ function App() {
         console.log('poll failure');
     }
 
-    const handleQuestionSubmit = () => {
+    const handleQuestionSubmit = async () => {
+        if (question == "") {
+            return
+        }
         // TODO Give the server the question
-        alert("Question text:\n" + question + "\n\nQuestion category:\n" + questionType);
+       //  alert("Question text:\n" + question + "\n\nQuestion category:\n" + questionType);
+        let url = "http://localhost:8080/askQuestion";
+        let fullquestion = {
+            "question": question,
+            "id": v4(),
+            "tags": questionType,
+        }
+        await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            redirect: 'follow', // manual, *follow, error
+            body: JSON.stringify(fullquestion),
+        });
+        setQuestion("")
+        setQuestionType([])
     }
 
     const showHelp = () => {
