@@ -33,7 +33,7 @@ function App() {
     }
 
     const handleQuestionSubmit = async () => {
-        if (question == "") {
+        if (question === "") {
             return
         }
         // TODO Give the server the question
@@ -97,20 +97,16 @@ function App() {
     }
 
     const handleUpvote = (id) => {
-        // Data expects to be in format:
-        // {id: id, qr: 'abcdefg'}
-
         // Initiate request to server
         getQuestionQR(id).then(data => {
             handleUpvoteSuccess(id, data);
         }).catch((error) => {
-            //alert(error);
+            alert(error);
             console.error('Error:', error);
         });
     }
 
     async function getQuestionQR(id) {
-        // TODO proper url
         const url = 'http://localhost:8080/relationship/initiate/' + id;
 
         const response = await fetch(url, {
@@ -136,6 +132,7 @@ function App() {
     }
 
     return (
+        <>
         <>
             <PageHeader title={'Ask Me Anything Anonymously'} capWidth={true}>
                 <IconButton aria-label='help' icon={questionFillIcon} onClick={showHelp} />
@@ -167,27 +164,25 @@ function App() {
                     { questions.length > 0 && questions.map(q => Question(q, myQR(q.id), handleUpvote)) }
                 </div>
             </section>
+        </>
+        <ReactPolling
+            url={`${server}/getQuestionsMetadata`}
+            interval= {3000} // in milliseconds(ms)
+            retryCount={9999} // this is optional
+            onSuccess={pollSuccess}
+            onFailure={pollFailure}
+            method={'GET'}
+            // headers={headers object} // this is optional
+            render={({ startPolling, stopPolling, isPolling }) => {
+                if (!isPolling) { startPolling() }
 
-            <ReactPolling
-                url={`${server}/getQuestionsMetadata`}
-                interval= {3000} // in milliseconds(ms)
-                retryCount={9999} // this is optional
-                onSuccess={pollSuccess}
-                onFailure={pollFailure}
-                method={'GET'}
-                // headers={headers object} // this is optional
-                render={({ startPolling, stopPolling, isPolling }) => {
-                    if(isPolling) {
-                        return (
-                            <button onClick={stopPolling} title={'Stop Polling'}>Polling</button>
-                        );
-                    } else {
-                        return (
-                            <button onClick={startPolling} title={'Start Polling'}>Not polling</button>
-                        );
-                    }
-                }}
-            />
+                if(isPolling) {
+                    return <p>Polling...</p>;
+                } else {
+                    return <p>Not polling</p>;
+                }
+            }}
+        />
         </>
   );
 }

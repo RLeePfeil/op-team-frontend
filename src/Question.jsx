@@ -6,7 +6,6 @@ import QRCode from "qrcode.react";
 export default function Question(q, qr, initializeQr) {
     const handleUpvote = () => {
         initializeQr(q.id);
-        // TODO Show loading state
     }
 
     const qrString = qr ? JSON.stringify(qr) : null;
@@ -14,6 +13,10 @@ export default function Question(q, qr, initializeQr) {
     return (
         <Card key={q.id}>
             <h4>{q.question}</h4>
+            <pre>
+                {q.tags.join(', ')}
+            </pre>
+
             <SecondaryButton className='upvote' onClick={() => handleUpvote(q.id)}>{q.dids.length} &#128588;</SecondaryButton>
 
             {qrString === null ? null : (
