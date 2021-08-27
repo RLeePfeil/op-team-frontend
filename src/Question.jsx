@@ -12,10 +12,8 @@ export default function Question(q, qr, initializeQr) {
     return (
         <Card key={q.id}>
             <h4>{q.text}</h4>
-            <SecondaryButton
-                className='upvote'
-                onClick={handleUpvote}>{q.dids.length} &#128588;
-            </SecondaryButton>
+            <h4>{q.question}</h4>
+            <SecondaryButton className='upvote' onClick={() => handleUpvote(q.id)}>{q.dids.length} &#128588;</SecondaryButton>
 
             { qr === null ? null : (
                 <div>

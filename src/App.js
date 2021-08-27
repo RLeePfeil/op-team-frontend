@@ -82,6 +82,7 @@ function App() {
 
         // Initiate request to server
         getQuestionQR(id).then(data => {
+            console.log(data)
             handleUpvoteSuccess(data);
         }).catch((error) => {
             alert(error);
@@ -91,7 +92,7 @@ function App() {
 
     async function getQuestionQR(id) {
         // TODO proper url
-        const url = 'https://localhost:8080/initialize?id=' + id;
+        const url = 'http://localhost:8080/relationship/initiate/' + id;
 
         const response = await fetch(url, {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
