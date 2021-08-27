@@ -12,6 +12,8 @@ import ReactPolling from "react-polling";
 
 function App() {
 
+    const server = 'localhost:8080';
+
     const QRCodes = [
         `{
             "type": "https://didcomm.org/didexchange/1.0/invitation",
@@ -27,6 +29,7 @@ function App() {
     ]
 
     const [question, setQuestion] = React.useState('');
+    const [questions, setQuestions] = React.useState([1, 2, 3]);
     const [questionType, setQuestionType] = React.useState([]);
 
     const handleChange = (event) => {
@@ -36,10 +39,16 @@ function App() {
 
     const pollSuccess = (resp) => {
         console.log(resp);
+
+        // Update all data on the page using setQuestions
     }
     const pollFailure = () => {
         // shhhh
         console.log('poll failure');
+    }
+
+    const handleUpvote = () => {
+        // initiate
     }
 
     const handleSubmit = () => {
@@ -66,8 +75,7 @@ function App() {
                 key={value}
                 id={`type-${value}`}
                 className={isTypeActive(value)}
-                onClick={() => setTypeActive(value)}
-            >
+                onClick={() => setTypeActive(value)}>
                 {name}
             </SecondaryButton>
         )
@@ -81,6 +89,15 @@ function App() {
             // Add type to list
             setQuestionType([...questionType, type])
         }
+    }
+
+    const Question = (q) => {
+        return (
+            <Card>
+                <QRCode value={QRCodes[0]} />
+                <p>{QRCodes[0]}</p>
+            </Card>
+        )
     }
 
     return (
@@ -112,20 +129,7 @@ function App() {
 
             <section className={'middleContainer'} >
                 <div className={'middle'} >
-                    <Card>
-                        <QRCode value={QRCodes[0]} />
-                        <p>{QRCodes[0]}</p>
-                    </Card>
-
-                    <Card>
-                        <QRCode value={QRCodes[0]} />
-                        <p>{QRCodes[0]}</p>
-                    </Card>
-
-                    <Card>
-                        <QRCode value={QRCodes[0]} />
-                        <p>{QRCodes[0]}</p>
-                    </Card>
+                    { questions.map((q) => Question(q)) }
                 </div>
             </section>
 
