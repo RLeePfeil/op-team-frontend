@@ -136,8 +136,7 @@ function App() {
     }
 
     return (
-        <>
-        <>
+        <main>
             <PageHeader title={'Ask Me Anything Anonymously'} capWidth={true}>
                 <IconButton aria-label='help' icon={questionFillIcon} onClick={showHelp} />
             </PageHeader>
@@ -165,29 +164,28 @@ function App() {
 
             <section className={'middleContainer'} >
                 <div className={'middle'} >
-                    { questions.length > 0 && questions.map(q => Question(q, myQR(q.id), handleUpvote, handleClearQRs)) }
+                    { questions.length > 0 && questions.map(q => Question(q, myQR(q.id), handleUpvote, handleClearQRs, Types)) }
                 </div>
             </section>
-        </>
-        <ReactPolling
-            url={`${server}/getQuestionsMetadata`}
-            interval= {3000} // in milliseconds(ms)
-            retryCount={9999} // this is optional
-            onSuccess={pollSuccess}
-            onFailure={pollFailure}
-            method={'GET'}
-            // headers={headers object} // this is optional
-            render={({ startPolling, stopPolling, isPolling }) => {
-                if (!isPolling) { startPolling() }
+            <ReactPolling
+                url={`${server}/getQuestionsMetadata`}
+                interval= {3000} // in milliseconds(ms)
+                retryCount={9999} // this is optional
+                onSuccess={pollSuccess}
+                onFailure={pollFailure}
+                method={'GET'}
+                // headers={headers object} // this is optional
+                render={({ startPolling, stopPolling, isPolling }) => {
+                    if (!isPolling) { startPolling() }
 
-                if(isPolling) {
-                    return <p>Polling...</p>;
-                } else {
-                    return <p>Not polling</p>;
-                }
-            }}
-        />
-        </>
+                    if(isPolling) {
+                        return <p className={'pollingMsg'}>Polling...</p>;
+                    } else {
+                        return <p className={'pollingMsg'}>Not polling</p>;
+                    }
+                }}
+            />
+        </main>
   );
 }
 

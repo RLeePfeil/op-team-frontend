@@ -39,12 +39,12 @@
   background-color: #FFF!important;
   opacity: .8;
 }
-#type-fun.active { background-color: aquamarine!important; }
-#type-integrity.active { background-color: cornflowerblue!important; }
-#type-profitability.active { background-color: chartreuse!important; }
-#type-employees.active { background-color: coral!important; }
-#type-innovation.active { background-color: hotpink!important; }
-#type-customerservice.active { background-color: darkkhaki!important; }
+#type-fun.active, .type-fun { background-color: aquamarine!important; }
+#type-integrity.active, .type-integrity { background-color: cornflowerblue!important; }
+#type-profitability.active, .type-profitability { background-color: chartreuse!important; }
+#type-employees.active, .type-employees { background-color: coral!important; }
+#type-innovation.active, .type-innovation { background-color: hotpink!important; }
+#type-customerservice.active, .type-customerservice { background-color: darkkhaki!important; }
 
 .questionTypes {
   display: flex;
@@ -53,8 +53,39 @@
   margin: -20px auto 24px;
 }
 
+.questionTagsContainer {
+  margin-top: -18px;
+  margin-bottom: 24px;
+}
+
+.questionTypePills {
+  border-radius: 999em;
+  margin-right: 6px;
+  padding: 2px 10px;
+  display: inline-block;
+}
+
 .upvote {
 
+}
+
+.upvote span {
+  overflow: visible!important;
+  padding-right: 6px;
+}
+
+.pollingMsg {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.questionId {
+  color: #777;
+  background-color: #EFEFEF;
+  margin: 24px -32px -32px -32px;
+  padding: 6px 32px;
+  text-align: right;
+  border-radius: 0 0 8px 8px;
 }
 
 @media screen and (max-width: 1430px) {
